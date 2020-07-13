@@ -1,6 +1,6 @@
 import requests #Allowa us to download the index html from Hacker News
 from bs4 import BeautifulSoup #Allows us to get the information from Hacker News html page
-
+from pprint import pprint
 res = requests.get('https://news.ycombinator.com/news')
 # Use BeautifulSoup to parse the text
 
@@ -16,8 +16,9 @@ def create_custom_hn(links,votes):
         vote = subtext[idx].select('.score')
         if len(vote):
             points = int(vote[0].getText().replace('points', ''))
-            print(points)
-            hn.append({'title': title, 'link': href, 'votes': points})
+            if points > 99:
+                hn.append({'title': title, 'link': href, 'votes': points})
 
     return hn
-print(create_custom_hn(links,subtext))
+pprint = pprint
+pprint(create_custom_hn(links,subtext))
